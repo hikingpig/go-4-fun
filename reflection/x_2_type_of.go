@@ -24,6 +24,6 @@ func example2() {
 	// the returned type is concrete: os.File not os.Writer
 }
 
-func main() {
-	example2()
-}
+// func main() {
+// 	example2()
+// }
