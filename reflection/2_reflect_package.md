@@ -17,7 +17,24 @@ reflect pacage defines two important types: reflect.Type and reflect.Value
     - result is always concrete
     - is used internally of %v in fmt.Printf
     - the String() method only return the type of value unless the value is string
+
      * so WHY Println and Printf doesn't use this String() method?
+     * fmt package `TREAT Values specially`. It doesn't use the String() method but print the underlying concrete value!
+
     - The Type() method return reflect.Type of the value
   - reflect.Value.Interface is the reverse of reflect.ValueOf. it returns an interface{} that holds THE SAME concrete value as reflect.Value's
     - empty interface hides the underlying type while reflect.Value has many methods to inspect it
+
+  - Kind() method: see x_4_kind.go
+    - there are only finite number of kinds, which contains all types:
+      - basics: Bool, String, numbers
+      - aggregates: Array, Struct
+      - references: Chan, Struct, Ptr, Slice, Map
+      - Interface
+      - Invalid
+    - there are methods to inspect the type of underlying value
+      - v.Int() will panic if value is not of int types
+      - v.Uint() similarly
+      - v.Bool()
+      - v.String: for value not of type string, it prints <Type Value> like <[]int64 Value>
+    - we use v.Type().String() to get the real type
