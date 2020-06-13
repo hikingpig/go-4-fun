@@ -10,4 +10,13 @@ Reflection is used in:
 
 Reflection increases expressiveness of language but complex and are not exposed in the packages's API
 
+Reflection is used to build a function can deal uniformly with types that:
+  - NOT satisfy a common interfaces
+  - NOT have a known representation
+  - NOT exist an the time the function is designed
 
+Naive Example (1_naive_sprintf.go): Sprintf: use switch case to get
+  - type switch -> Type has a String method or not
+  - add switch to test value's type: string, int, bool, etc
+
+There are infinite number of types. The switch just can not handle all.
