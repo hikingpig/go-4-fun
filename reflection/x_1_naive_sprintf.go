@@ -1,4 +1,4 @@
-package learnreflection
+package main
 
 import "strconv"
 
