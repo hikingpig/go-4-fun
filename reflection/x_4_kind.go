@@ -45,6 +45,6 @@ func example4() {
 	fmt.Println(Any([]time.Duration{d}))
 }
 
-func main() {
-	example4()
-}
+// func main() {
+// 	example4()
+// }

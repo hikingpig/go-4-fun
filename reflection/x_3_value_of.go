@@ -25,6 +25,6 @@ func example3() {
 	fmt.Printf("%d\n", i)
 }
 
-func main() {
-	example3()
-}
+// func main() {
+// 	example3()
+// }
