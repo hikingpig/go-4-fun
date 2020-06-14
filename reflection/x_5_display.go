@@ -99,6 +99,6 @@ func example5() {
 	// Display("c", c)
 }
 
-func main() {
-	example5()
-}
+// func main() {
+// 	example5()
+// }
