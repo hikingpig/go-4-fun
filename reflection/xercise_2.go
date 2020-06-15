@@ -86,7 +86,7 @@ func test_exercise2() {
 	Display3("c", c)
 }
 
-func main() {
-	fmt.Println("================== 222222222222222222222222222222222")
-	test_exercise2()
-}
+// func main() {
+// 	fmt.Println("================== 222222222222222222222222222222222")
+// 	test_exercise2()
+// }
