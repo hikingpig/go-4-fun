@@ -126,6 +126,6 @@ func test_xcersise_3() {
 	Marshal1(strangelove)
 }
 
-func main() {
-	test_xcersise_3()
-}
+// func main() {
+// 	test_xcersise_3()
+// }
