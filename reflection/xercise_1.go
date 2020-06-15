@@ -77,6 +77,6 @@ func test_exercise1() {
 	Display2("myweird v2", myweird2)
 }
 
-func main() {
-	test_exercise1()
-}
+// func main() {
+// 	test_exercise1()
+// }
