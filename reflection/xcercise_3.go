@@ -6,13 +6,8 @@ import (
 	"reflect"
 )
 
-/* we don't have encoding for Bool yet, so remove color field from Movie
-else, it will results in an error and we will not see anything
-use buf.String() to display the result
-*/
-
-func encode(buf *bytes.Buffer, v reflect.Value) error {
-	fmt.Println("\n========= encode is called, v.Kind is", v.Kind())
+func encode1(buf *bytes.Buffer, v reflect.Value) error {
+	fmt.Println("\n========= encode1 is called, v.Kind is", v.Kind())
 	switch v.Kind() {
 	case reflect.Invalid:
 		buf.WriteString("nil")
@@ -22,8 +17,18 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 		fmt.Fprintf(buf, "%d", v.Uint())
 	case reflect.String:
 		fmt.Fprintf(buf, "%q", v.String())
+	case reflect.Bool:
+		if v.Bool() {
+			buf.WriteString("t")
+		} else {
+			buf.WriteString("nil")
+		}
+	case reflect.Complex64, reflect.Complex128:
+		fmt.Fprintf(buf, "%g", v.Complex())
+	case reflect.Float32, reflect.Float64:
+		fmt.Fprintf(buf, "%g", v.Float())
 	case reflect.Ptr:
-		return encode(buf, v.Elem())
+		return encode1(buf, v.Elem())
 	case reflect.Array, reflect.Slice:
 		buf.WriteByte('(')
 		for i := 0; i < v.Len(); i++ {
@@ -31,7 +36,7 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 			if i > 0 {
 				buf.WriteByte(' ')
 			}
-			if err := encode(buf, v.Index(i)); err != nil {
+			if err := encode1(buf, v.Index(i)); err != nil {
 				return err
 			}
 			fmt.Println("==================== buf now is", buf.String())
@@ -46,7 +51,7 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 				buf.WriteByte((' '))
 			}
 			fmt.Fprintf(buf, "(%s ", v.Type().Field(i).Name)
-			if err := encode(buf, v.Field(i)); err != nil {
+			if err := encode1(buf, v.Field(i)); err != nil {
 				return err
 			}
 			buf.WriteByte(')')
@@ -62,11 +67,11 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 			if i > 0 {
 				buf.WriteByte(' ')
 			}
-			if err := encode(buf, key); err != nil {
+			if err := encode1(buf, key); err != nil {
 				return err
 			}
 			buf.WriteByte(' ')
-			if err := encode(buf, v.MapIndex(key)); err != nil {
+			if err := encode1(buf, v.MapIndex(key)); err != nil {
 				return err
 			}
 			buf.WriteByte(')')
@@ -79,23 +84,26 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 	return nil
 }
 
-func Marshal(v interface{}) ([]byte, error) {
-	fmt.Println("======= Marshal is called")
+func Marshal1(v interface{}) ([]byte, error) {
+	fmt.Println("======= Marshal1 is called")
 	var buf bytes.Buffer
-	if err := encode(&buf, reflect.ValueOf(v)); err != nil {
-		fmt.Println("=========== encode error", err)
+	if err := encode1(&buf, reflect.ValueOf(v)); err != nil {
+		fmt.Println("=========== encode1 error", err)
 		return nil, err
 	}
 	return buf.Bytes(), nil
 }
 
-func example6() {
+func test_xcersise_3() {
 	type Movie struct {
 		Title, Subtitle string
 		Year            int
 		Actor           map[string]string
 		Oscars          []string
 		Sequel          *string
+		Complex         complex128
+		Float           float64
+		Color           bool
 	}
 
 	strangelove := Movie{
@@ -110,11 +118,14 @@ func example6() {
 			"Best Actor (Nomin.)",
 			"Best Adapted Screenplay (Nomin.)",
 		},
+		Complex: complex(1, 2),
+		Float:   1.32,
+		Color:   false,
 	}
 	fmt.Println("########### START")
-	Marshal(strangelove)
+	Marshal1(strangelove)
 }
 
-// func main() {
-// 	example6()
-// }
+func main() {
+	test_xcersise_3()
+}
