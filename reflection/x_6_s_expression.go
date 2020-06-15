@@ -6,6 +6,11 @@ import (
 	"reflect"
 )
 
+/* we don't have encoding for Bool yet, so remove color field from Movie
+else, it will results in an error and we will not see anything
+use buf.String() to display the result
+*/
+
 func encode(buf *bytes.Buffer, v reflect.Value) error {
 	fmt.Println("\n========= encode is called, v.Kind is", v.Kind())
 	switch v.Kind() {
@@ -22,19 +27,21 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 	case reflect.Array, reflect.Slice:
 		buf.WriteByte('(')
 		for i := 0; i < v.Len(); i++ {
+			fmt.Println("################### looping over arrary/slice, i =", i)
 			if i > 0 {
 				buf.WriteByte(' ')
 			}
 			if err := encode(buf, v.Index(i)); err != nil {
 				return err
 			}
+			fmt.Println("==================== buf now is", buf.String())
 		}
 		buf.WriteByte(')')
 	case reflect.Struct:
 		fmt.Println("======== struct numfield", v.NumField())
 		buf.WriteByte('(')
 		for i := 0; i < v.NumField(); i++ {
-			fmt.Println("=========== looping over numfield, i =", i)
+			fmt.Println("################## looping over numfield, i =", i)
 			if i > 0 {
 				buf.WriteByte((' '))
 			}
@@ -43,14 +50,15 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 				return err
 			}
 			buf.WriteByte(')')
-			fmt.Println("========== buf now is", string(buf.Bytes()))
+			fmt.Println("========== buf now is", buf.String())
 		}
 		buf.WriteByte(')')
 
 	case reflect.Map:
 		buf.WriteByte('(')
 		for i, key := range v.MapKeys() {
-			fmt.Println("=========== looping over map keys, i =", i, "key =", key)
+			fmt.Println("##################### looping over map keys, i =", i, "key =", key)
+			buf.WriteByte('(')
 			if i > 0 {
 				buf.WriteByte(' ')
 			}
@@ -62,6 +70,7 @@ func encode(buf *bytes.Buffer, v reflect.Value) error {
 				return err
 			}
 			buf.WriteByte(')')
+			fmt.Println("============ buf now is", buf.String())
 		}
 		buf.WriteByte(')')
 	default: // float, complex, bool, chan, func, interface
@@ -98,7 +107,7 @@ func example6() {
 			"Grp. Capt. Lionel Mandrake": "Peter Sellers",
 		},
 		Oscars: []string{
-			"Best Actor (Nomin.",
+			"Best Actor (Nomin.)",
 			"Best Adapted Screenplay (Nomin.)",
 		},
 	}
