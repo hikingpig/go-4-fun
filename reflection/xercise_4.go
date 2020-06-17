@@ -122,6 +122,6 @@ func test_xercise4() {
 	fmt.Println("=========== FINAL RESULT: \n", string(data))
 }
 
-func main() {
-	test_xercise4()
-}
+// func main() {
+// 	test_xercise4()
+// }
