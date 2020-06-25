@@ -116,6 +116,6 @@ func test_xercise_5() {
 	fmt.Println("======= unmarshal result: ", mymovie)
 }
 
-func main() {
-	test_xercise_5()
-}
+// func main() {
+// 	test_xercise_5()
+// }
