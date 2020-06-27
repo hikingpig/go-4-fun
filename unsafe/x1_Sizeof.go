@@ -34,6 +34,6 @@ func example1() {
 	fmt.Println("=== size of interface: ", unsafe.Sizeof(d))
 }
 
-func main() {
-	example1()
-}
+// func main() {
+// 	example1()
+// }
