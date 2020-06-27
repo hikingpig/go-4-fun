@@ -22,6 +22,6 @@ func example2() {
 	fmt.Printf("=== sizeOf(x.c) = %v; Alignof(x.c)= %v; Offsetof(x.c)=%v\n", unsafe.Sizeof(x.c), unsafe.Alignof(x.c), unsafe.Offsetof(x.c))
 }
 
-func main() {
-	example2()
-}
+// func main() {
+// 	example2()
+// }
