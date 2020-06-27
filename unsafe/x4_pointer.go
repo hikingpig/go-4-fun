@@ -45,6 +45,6 @@ func example4() {
 	*/
 }
 
-func main() {
-	example4()
-}
+// func main() {
+// 	example4()
+// }
