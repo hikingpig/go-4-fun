@@ -34,3 +34,8 @@ the t param provides methods for:
 go test -v -run "French|Canal"
 - run takes a regular expression. We can use French without the quotes. But for expression with | we use quotes to prevent misunderstanding as piping
 
+8. Use test table to cover more test cases, avoid duplicating assertion logic and error msgs
+
+9. t.Errorf does not cause panic. tests are independent. if an entry in the table fails, the other entries are still checked. we may learn about multiple failure in a run.
+
+- use t.Fatal or t.Fatalf to stop the test, avoiding too much output from other tests
