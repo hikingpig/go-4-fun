@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 	"unicode"
 )
@@ -28,9 +27,6 @@ func TestNonPalindrome(t *testing.T) {
 - we must use rune
 */
 func TestFrenchPalindrome(t *testing.T) {
-	m := "été"
-	fmt.Println("==== m[0] == m[2]", m[0] == m[2])
-	fmt.Printf("==== m[0] %d, m[2] %d, m[0] %v, m[2] %v\n", m[0], m[2], m[0], m[2])
 	if !IsPalindrome("été") {
 		t.Error(`IsPalindrome("été") = false`)
 	}
@@ -47,13 +43,15 @@ func TestCanalPalindrome(t *testing.T) {
 }
 
 func IsPalindrome(s string) bool {
-	var letters []rune
+	// var letters []rune
+	letters := make([]rune, len(s))
 	for _, r := range s {
 		if unicode.IsLetter(r) {
 			letters = append(letters, unicode.ToLower(r))
 		}
 	}
-	for i := range letters {
+	n := len(letters) / 2
+	for i := 0; i < n; i++ {
 		if letters[i] != letters[len(letters)-1-i] {
 			return false
 		}
