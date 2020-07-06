@@ -12,13 +12,14 @@ func TestCoverage(t *testing.T) {
 		env   Env
 		want  string // expected error from Parse/Check or result from Eval
 	}{
-		// {"x % 2", nil, "unexpected '%'"},
-		// {"!true", nil, "unexpected '!'"},
-		// {"log(10)", nil, `unknown function "log"`},
-		// {"sqrt(1, 2)", nil, "call to sqrt has 2 args, want 1"},
+		{"x % 2", nil, "unexpected '%'"},
+		{"!true", nil, "unexpected '!'"},
+		{"log(10)", nil, `unknown function "log"`},
+		{"sqrt(1, 2)", nil, "call to sqrt has 2 args, want 1"},
 		{"sqrt(A / pi)", Env{"A": 87616, "pi": math.Pi}, "167"},
-		// {"pow(x, 3) + pow(y, 3)", Env{"x": 9, "y": 10}, "1729"},
-		// {"5 / 9 * (F - 32)", Env{"F": -40}, "-40"},
+		{"pow(x, 3) + pow(y, 3)", Env{"x": 9, "y": 10}, "1729"},
+		{"5 / 9 * (F - 32)", Env{"F": -40}, "-40"},
+		// {"-x * -x", Env{"x": 2}, "4"},
 	}
 
 	for _, test := range tests {
